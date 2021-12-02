@@ -3,10 +3,12 @@
 -import(lists, [map/2, foldl/3, reverse/1]).
 -import(string, [trim/1]).
 
+-spec parse(list(string())) -> list(integer()).
 parse(Inputs) -> 
     Format = fun(X) -> list_to_integer(trim(X)) end,
     map(Format, Inputs).
 
+-spec solve01(list(integer())) -> integer().
 solve01(Inputs) ->
     Format = fun(X, {A, Count})  -> 
         if 
@@ -19,13 +21,16 @@ solve01(Inputs) ->
 
     Res - 1.
 
+-spec solve02(list(integer())) -> integer().
 solve02(Inputs) -> 
     Triplets = triplets(Inputs),
     Sums = map(fun lists:sum/1, Triplets),
     solve01(Sums).
 
+-spec triplets(list()) -> list().
 triplets(List) -> reverse(triplets(List, [])).
 
+-spec triplets(list(), list()) -> list().
 triplets([_A, _B | []], Acc) -> Acc; 
 triplets([A,B,C|T], Acc) -> 
     Rem = [B, C | T],
