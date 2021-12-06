@@ -1,7 +1,7 @@
 -module(aoc2021_day02).
 -behaviour(aoc_puzzle).
 -export([parse/1, solve01/1, solve02/1]).
--import(lists, [map/2, foreach/2, foldl/3]).
+-import(lists, [map/2, foldl/3]).
 -import(string, [split/2, trim/1]).
 
 -type direction() :: up | down | forward | invalid.
