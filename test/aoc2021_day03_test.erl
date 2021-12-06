@@ -1,11 +1,8 @@
 -module(aoc2021_day03_test).
-
 -include_lib("eunit/include/eunit.hrl").
 -include_lib("stdlib/include/assert.hrl").
-
 -import(aoc2021_day03, [
     parse/1, 
-    parse_count/1, 
     solve01/1, 
     solve02/1, 
     reduce/3, 
@@ -16,6 +13,7 @@
     filter_by_index/3,
     filter_inputs/2]).
 -import(inputs, [readlines/1]).
+-import(binary_utils, [count/1]).
 
 solve01_test() -> 
     Inputs = [
@@ -62,41 +60,31 @@ parse_test() ->
 
     ?assertEqual(Expected, H).
 
-parse_count_test() ->
+count_test() ->
     Inputs = readlines("priv/inputs/2021/input03"),
-    [H|_T] = parse_count(parse(Inputs)),
+    [H|_T] = count(parse(Inputs)),
     Expected = [{0,1},{1,0},{1,0},{1,0},{1,0},{1,0},{0,1},{1,0},{0,1},{0,1},{1,0},{0,1}],
 
     ?assertEqual(Expected, H).
 
-convert_test() -> 
-    Bits1 = [1,1],
-    Bits2 = [1,0,1,1,0],
-    {A, B} = {convert(Bits1), convert(Bits2)},
-
-    ?assertEqual(3, A),
-    ?assertEqual(22, B).
-
 gamma_test() ->
-    Inputs = parse_count(parse([
+    Inputs = parse([
         "00100",
         "11110",
         "10110",
         "10111"
-    ])),
-    Reduced = reduce(Inputs),
-    Gamma = gamma(Reduced),
+    ]),
+    Gamma = gamma(Inputs),
     ?assertEqual([1,0,1,1,0], Gamma).
 
 epsilon_test() ->
-    Inputs = parse_count(parse([
+    Inputs = parse([
         "00100",
         "11110",
         "10110",
         "10111"
-    ])),
-    Reduced = reduce(Inputs),
-    Epsilon = epsilon(Reduced),
+    ]),
+    Epsilon = epsilon(Inputs),
     
     ?assertEqual([0,1,0,0,1], Epsilon).
 
@@ -121,7 +109,7 @@ reduce_3_test() ->
     ?assertEqual(Expected,Res).
 
 reduce_1_test() -> 
-    Inputs = parse_count(parse([
+    Inputs = count(parse([
         "00100",
         "11110",
         "10110",
